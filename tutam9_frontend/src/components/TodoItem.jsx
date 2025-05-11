@@ -1,15 +1,30 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Badge } from './ui/Elements';
+import { toast } from 'react-toastify';
 
 const TodoItem = ({ todo, onDelete, onToggleComplete }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isChecked, setIsChecked] = useState(todo.completed);
   const checkboxRef = useRef(null);
-  
-  const handleToggle = () => {
+    const handleToggle = () => {
     setIsChecked(!isChecked);
     onToggleComplete(todo.id);
+    
+    // Show toast notification
+    if (!isChecked) {
+      toast.success("Task marked as completed!");
+    } else {
+      toast.info("Task marked as incomplete");
+    }
+  };
+  
+  // Add confirmation dialog for delete
+  const handleDelete = () => {
+    if (confirm('Are you sure you want to delete this task?')) {
+      onDelete(todo.id);
+      toast.success("Task deleted successfully");
+    }
   };
   
   // Format the date more nicely
@@ -105,11 +120,10 @@ const TodoItem = ({ todo, onDelete, onToggleComplete }) => {
               </p>
             </div>
           </div>
-        </div>
-          <motion.button
+        </div>          <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
-          onClick={() => onDelete(todo.id)}
+          onClick={handleDelete}
           className={`text-red-500 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 
             p-2 rounded-full hover:bg-red-50 dark:hover:bg-red-900/20 transition-all duration-200
             border-none bg-transparent

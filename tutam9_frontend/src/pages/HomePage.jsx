@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
+import { toast } from 'react-toastify';
 import TodoForm from '../components/TodoForm';
 import TodoList from '../components/TodoList';
 import TodoFilters from '../components/TodoFilters';
@@ -39,8 +40,7 @@ const HomePage = () => {
         clearTimeout(searchDebounceTimeout);
       }
     };
-  }, [searchTerm]);
-  const fetchTodos = async () => {
+  }, [searchTerm]);  const fetchTodos = async () => {
     try {
       setLoading(true);
       const data = await getTodos();
@@ -49,6 +49,8 @@ const HomePage = () => {
     } catch (err) {
       console.error('Error fetching todos:', err);
       setError('Failed to load todos. Please try again later.');
+      // Show error toast
+      toast.error('Failed to load todos. Please try again later.');
       // Use empty array for todos when there's an error
       setAllTodos([]);
     } finally {
@@ -73,13 +75,14 @@ const HomePage = () => {
     } finally {
       setLoading(false);
     }
-  };
-  const handleAddTodo = async (todoData) => {
+  };  const handleAddTodo = async (todoData) => {
     try {
       const newTodo = await createTodo(todoData);
       setAllTodos([newTodo, ...allTodos]);
+      toast.success('Task added successfully!');
     } catch (err) {
       setError('Failed to add todo. Please try again.');
+      toast.error('Failed to add task. Please try again.');
       console.error('Error adding todo:', err);
     }
   };
@@ -93,7 +96,6 @@ const HomePage = () => {
       console.error('Error deleting todo:', err);
     }
   };
-
   const handleToggleComplete = async (id) => {
     try {
       const updatedTodo = await toggleTodoCompletion(id);
@@ -102,6 +104,7 @@ const HomePage = () => {
       ));
     } catch (err) {
       setError('Failed to update todo. Please try again.');
+      toast.error('Failed to update task status. Please try again.');
       console.error('Error toggling todo completion:', err);
     }
   };const [priorityFilter, setPriorityFilter] = useState('all');

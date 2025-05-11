@@ -1,36 +1,46 @@
-# TUTAM SBD9 Ifan - Task and Note Manager
+# 📝✅ TUTAM SBD9 Ifan - Task and Note Manager 🚀
 
-A comprehensive Task and Note Manager application built with React.js (frontend) and Express.js (backend) using Neon PostgreSQL as the database.
+> 🎓 **Academic Project**: This application is submitted as an additional assignment for Module 9 of the Database Systems Practicum (SBD Praktikum).
 
-## Features
+A comprehensive and modern Task and Note Manager application built with React.js (frontend) and Express.js (backend) using Neon PostgreSQL as the database. Deployed on Vercel for seamless cloud access! 🌩️
 
-### Tasks Feature
-- Create new tasks with title, description and priority
-- View all tasks with their creation date and priority
-- Filter tasks by status and priority
-- Delete tasks
-- Mark tasks as completed
-- Task statistics with priority breakdown
+## ✨ Features
 
-### Notes Feature
-- Create new notes with title and content
-- View all notes with search functionality
-- Edit existing notes
-- Delete notes
-- Responsive grid layout
+### 📋 Tasks Feature
+- ➕ Create new tasks with title, description and priority levels
+- 👁️ View all tasks with their creation date and priority indicators
+- 🔍 Filter tasks by status (active/completed) and priority
+- 🗑️ Delete tasks with confirmation dialog
+- ✅ Mark tasks as completed with status tracking
+- 📊 Task statistics with priority breakdown
 
-## Tech Stack
+### 📔 Notes Feature
+- ✏️ Create new notes with title and content
+- 🔎 View all notes with powerful search functionality
+- 📝 Edit existing notes easily
+- 🗑️ Delete notes with confirmation
+- 📱 Responsive grid layout for all devices
 
-### Frontend
-- React.js with Vite
-- React Router DOM for navigation
-- Axios for API requests
-- TailwindCSS for styling
+## 🛠️ Tech Stack
 
-### Backend
-- Express.js
-- Neon PostgreSQL database
-- RESTful API
+### 🖥️ Frontend
+- ⚛️ React.js with Vite for blazing-fast development
+- 🧭 React Router DOM for seamless navigation
+- 🔄 Axios for efficient API requests
+- 🎨 TailwindCSS for beautiful, responsive styling
+- 🎬 Framer Motion for smooth animations
+- 🍞 React Toastify for notifications
+
+### ⚙️ Backend
+- 🚂 Express.js for server-side logic
+- 🐘 Neon PostgreSQL database (cloud PostgreSQL)
+- 🔌 RESTful API architecture
+- 📝 Winston for logging
+
+### ☁️ Deployment
+- 🚀 Vercel for both frontend and backend hosting
+- 🔄 CI/CD with GitHub integration
+- 🌐 Custom domain configuration
 
 ## Setup Instructions
 
@@ -83,6 +93,20 @@ npm run start:frontend
 
 - Frontend will be available at: http://localhost:5173
 - Backend API will be available at: http://localhost:5000
+
+## 🌐 Live Deployment
+
+The application is deployed and accessible online:
+
+- 🌟 **Frontend**: [https://tutam9-frontend.vercel.app](https://tutam9-frontend.vercel.app)
+- 🔌 **Backend API**: [https://tutam-sbd-9-back.vercel.app](https://tutam-sbd-9-back.vercel.app)
+
+## 👨‍🎓 Student Information
+
+- **Name**: Fathan Yazid Satriani
+- **NPM**: 2306250560
+- **Course**: Database Systems Practicum (SBD9)
+- **Assignment**: TUTAM (Additional Module)
 
 ## API Endpoints
 
