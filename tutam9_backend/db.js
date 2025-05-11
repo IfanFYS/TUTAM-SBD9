@@ -22,13 +22,25 @@ if (process.env.DATABASE_URL) {
   console.log('Using individual connection parameters');
 }
 
-// Test the connection when the app starts
-pool.query('SELECT NOW()', (err, res) => {
-  if (err) {
-    console.error('Database connection error:', err.message);
-  } else {
+// For serverless environments like Vercel, we shouldn't test the connection on startup
+// Instead, we'll test it when needed
+const testConnection = async () => {
+  try {
+    const res = await pool.query('SELECT NOW()');
     console.log('Database connected successfully at:', res.rows[0].now);
+    return true;
+  } catch (err) {
+    console.error('Database connection error:', err.message);
+    return false;
   }
-});
+};
 
-module.exports = pool;
+// Only test the connection when not in production to avoid issues with cold starts
+if (process.env.NODE_ENV !== 'production') {
+  testConnection();
+}
+
+module.exports = { 
+  pool, 
+  testConnection 
+};
