@@ -4,6 +4,16 @@ import { toast } from 'react-toastify';
 import noteService from '../services/noteService';
 
 const NotesPage = () => {
+  // Format the date nicely with time included
+  const formatDate = (dateString) => {
+    const options = { 
+      month: 'short', 
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [title, setTitle] = useState('');
@@ -324,11 +334,10 @@ const NotesPage = () => {
                   </p>
                 </div>
                 <div className="flex justify-between items-center mt-3 pt-2 border-t border-secondary-100 dark:border-secondary-700">
-                  <div className="text-xs text-secondary-500 dark:text-secondary-500 flex items-center">
-                    <svg className="h-3.5 w-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <div className="text-xs text-secondary-500 dark:text-secondary-500 flex items-center">                    <svg className="h-3.5 w-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    {note.created_at && new Date(note.created_at).toLocaleDateString()}
+                    {note.created_at && formatDate(note.created_at)}
                   </div>
                   <div className="text-xs font-medium text-primary-600 dark:text-primary-400">
                     NoteMaster
