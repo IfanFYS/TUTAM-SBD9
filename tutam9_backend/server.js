@@ -1,43 +1,49 @@
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require('body-parser');
-const { initDatabase } = require('./db');
-const todosRoutes = require('./routes/todos');
-const notesRoutes = require('./routes/notes');
+const logger = require('./logger');
+const pool = require('./db');
 
-require('dotenv').config();
+const todosRouter = require('./routes/todos');
+const notesRouter = require('./routes/notes');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
 
-// Middleware
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' 
-    ? ['https://your-frontend-url.vercel.app'] 
-    : 'http://localhost:5173'
+  origin: ['http://localhost:5173', 'https://your-frontend-url.vercel.app'],
+  credentials: true
 }));
-app.use(bodyParser.json());
+app.use(express.json());
 
-// Routes
-app.use('/api/todos', todosRoutes);
-app.use('/api/notes', notesRoutes);
-
-// Root route
-app.get('/', (req, res) => {
-  res.send('TUTAM SBD9 Ifan API is running');
+app.use((req, res, next) => {
+  logger.info(`${req.method} ${req.url}`);
+  next();
 });
 
-// Initialize database and start server
-const startServer = async () => {
-  await initDatabase();
-  
+app.use('/api/todos', todosRouter);
+app.use('/api/notes', notesRouter);
+
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+app.get('/', (req, res) => {
+  res.status(200).json({ message: 'TUTAM SBD9 Ifan API is running' });
+});
+
+app.use((err, req, res, next) => {
+  logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
+  res.status(err.status || 500).json({
+    error: {
+      message: err.message || 'Internal Server Error',
+    },
+  });
+});
+
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 5000;
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });
-};
-
-startServer().catch(err => {
-  console.error('Failed to start server:', err);
-});
+}
 
 module.exports = app;
